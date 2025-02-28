@@ -1,0 +1,25 @@
+
+/* global.css */
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: #2d3748; /* dark background color */
+}
+
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background-color: #4a5568; /* dark thumb color */
+  border-radius: 6px;
+  border: 3px solid #2d3748; /* match the track color */
+}
+
+/* For Firefox */
+body,
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4a5568 #2d3748;
+}
