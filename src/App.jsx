@@ -11,6 +11,7 @@ const App = () => {
     const [showBody, setShowBody] = useState(false);
     const [randomLeft, setRandomLeft] = useState("");
     const [randomStart, setRandomStart] = useState(0);
+    const [searchTag, setSearchTag] = useState("");
 
     const handeTestClick = () => {
         setViewMode(2);
@@ -74,14 +75,26 @@ const App = () => {
             });
 
             if (currentSection) newSections.push(currentSection);
-            setSections(newSections);
-            setRandomStart(newSections.length)
-            setRandomLeft(newSections.length.toString() + "/" + newSections.length.toString())
+
+
+            const filteredSections = searchTag.trim()
+                ? newSections.filter(section =>
+                    section.part.toLowerCase().includes(searchTag.trim().toLowerCase())
+                )
+                : newSections;
+
+            setSections(filteredSections);
+            setRandomStart(filteredSections.length)
+            setRandomLeft(filteredSections.length.toString() + "/" + filteredSections.length.toString())
             setViewMode(1);
 
         } catch (error) {
             console.error('Error processing document:', error);
         }
+    };
+
+    const handleInputChange = (e) => {
+        setSearchTag(e.target.value);
     };
 
     const selectRandomSection = () => {
@@ -158,6 +171,19 @@ const App = () => {
                             <option value="h3">H3</option>
                             <option value="h4">H4</option>
                         </select>
+                    </div>
+                    <div className="w-full max-w-md p-4 bg-gray-900 rounded-lg shadow-lg">
+                        <label htmlFor="search" className="text-white text-lg font-semibold mb-2 block">
+                            Search Parent
+                        </label>
+                        <input
+                            id="search"
+                            type="text"
+                            value={searchTag}
+                            onChange={handleInputChange}
+                            placeholder="Search..."
+                            className="w-full p-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
                     </div>
                 </div>
             ) : ViewMode === 1 ? (
