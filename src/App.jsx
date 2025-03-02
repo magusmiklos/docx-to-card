@@ -43,6 +43,7 @@ const App = () => {
             const newSections = [];
             let currentSection = null;
             let currentPart = "";
+            let lastHeaderWasNode = false;
 
             elements.forEach(element => {
                 const tag = element.tagName.toLowerCase();
@@ -51,6 +52,7 @@ const App = () => {
 
                 if (tag === parentHeader) {
                     currentPart = content;
+                    lastHeaderWasNode = false;
                 } else if (tag === sectionHeader) {
                     if (currentSection) {
                         newSections.push(currentSection);
@@ -61,7 +63,8 @@ const App = () => {
                         title: content,
                         body: [],
                     };
-                } else if (currentSection) {
+                    lastHeaderWasNode = true;
+                } else if (currentSection && lastHeaderWasNode) {
                     if (imgSrc) {
                         currentSection.body.push(`<img src="${imgSrc}" alt="image" />`);
                     } else {
